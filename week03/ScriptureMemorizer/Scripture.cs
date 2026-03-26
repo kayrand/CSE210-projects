@@ -24,10 +24,26 @@ public class Scripture
 
     public void HideRandomWords(int numberToHide)
     {
+        List<Word> visibleWords = new List<Word>();
+
+        foreach (Word word in _words)
+        {
+            if (!word.IsHidden())
+            {
+                visibleWords.Add(word);
+            }
+        }
+
         for (int i = 0; i < numberToHide; i++)
         {
-            int index = _random.Next(_words.Count);
-            _words[index].Hide();
+            if (visibleWords.Count == 0)
+            {
+                break;
+            }
+
+            int index = _random.Next(visibleWords.Count);
+            visibleWords[index].Hide();
+            visibleWords.RemoveAt(index);
         }
     }
 
